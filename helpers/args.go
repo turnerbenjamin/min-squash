@@ -2,7 +2,6 @@ package helpers
 
 import (
 	"errors"
-	"flag"
 	"strings"
 )
 
