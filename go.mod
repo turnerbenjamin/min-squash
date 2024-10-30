@@ -1,4 +1,4 @@
-module github.com/turnerbenjamin/minsquash
+module github.com/turnerbenjamin/min-squash
 
 go 1.23.2
 

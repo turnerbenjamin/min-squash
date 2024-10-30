@@ -1,4 +1,4 @@
-package minsquash
+package main
 
 import (
 	"fmt"
@@ -7,11 +7,11 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/turnerbenjamin/minsquash/helpers"
+	"github.com/turnerbenjamin/min-squash/helpers"
 )
 
-func MinSquash(inputDir string, outputDir string, filetypes []string) {
-	args, err := helpers.ParseArgs(inputDir, outputDir, filetypes)
+func main() {
+	args, err := helpers.GetArgs()
 	if err != nil {
 		log.Fatal(err)
 	}
