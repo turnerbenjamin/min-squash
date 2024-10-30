@@ -12,43 +12,27 @@ type Args struct {
 	Filetypes []string
 }
 
-func GetArgs() (*Args, error) {
-	inputDirFlag := ""
-	outputDirFlag := ""
-	fileTypesFlag := ""
-
-	flag.StringVar(&inputDirFlag, "sourcedir", inputDirFlag, "source directory")
-	flag.StringVar(&inputDirFlag, "sd", inputDirFlag, "source directory")
-
-	flag.StringVar(&outputDirFlag, "targetdir", outputDirFlag, "target directory")
-	flag.StringVar(&outputDirFlag, "td", outputDirFlag, "target directory")
-
-	flag.StringVar(&fileTypesFlag, "filetypes", fileTypesFlag, "filetypes to min-squash")
-	flag.StringVar(&fileTypesFlag, "ft", fileTypesFlag, "filetypes to min-squash")
-
-	flag.Parse()
-
-	if inputDirFlag == "" {
-		return nil, errors.New("input flag must be set")
+func ParseArgs(inputDir string, outputDir string, filetypes []string) (*Args, error) {
+	if inputDir == "" {
+		return nil, errors.New("input dir must be set")
 	}
 
-	if outputDirFlag == "" {
-		return nil, errors.New("output flag must be set")
+	if outputDir == "" {
+		return nil, errors.New("output dir must be set")
 	}
 
-	if fileTypesFlag == "" {
-		return nil, errors.New("filetypes flag must be set")
+	if filetypes == nil || len(filetypes) == 0 {
+		return nil, errors.New("filetypes must be set")
 	}
 
-	if !strings.HasSuffix(inputDirFlag, "/") {
-		inputDirFlag = inputDirFlag + "/"
+	if !strings.HasSuffix(inputDir, "/") {
+		inputDir = inputDir + "/"
 	}
 
-	if !strings.HasSuffix(outputDirFlag, "/") {
-		outputDirFlag = outputDirFlag + "/"
+	if !strings.HasSuffix(outputDir, "/") {
+		outputDir = outputDir + "/"
 	}
 
-	filetypes := strings.Split(fileTypesFlag, ",")
 	for i, ft := range filetypes {
 		formatted := strings.Trim(ft, " ")
 		if strings.Contains(formatted, " ") {
@@ -62,8 +46,8 @@ func GetArgs() (*Args, error) {
 		filetypes[i] = formatted
 	}
 	userArgs := Args{
-		InputDir:  inputDirFlag,
-		OutputDir: outputDirFlag,
+		InputDir:  inputDir,
+		OutputDir: outputDir,
 		Filetypes: filetypes,
 	}
 
